@@ -54,24 +54,22 @@ bot.on('message', (msg) => __awaiter(void 0, void 0, void 0, function* () {
     }
 }));
 app.post('/web-data', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { queryId, pizzas = [], totalPrice } = req.body;
+    const { queryId, products = [], totalPrice } = req.body;
     try {
         yield bot.answerWebAppQuery(queryId, {
             type: 'article',
             id: queryId,
             title: 'Успешная покупка',
             input_message_content: {
-                message_text: ` Поздравляю с покупкой, вы приобрели товар на сумму ${totalPrice}, ${[
-                    pizzas,
-                ]
+                message_text: ` Поздравляю с покупкой, вы приобрели товар на сумму ${totalPrice}, ${products
                     .map((item) => {
-                    item.title;
                     pizzaArray.push(item);
+                    return item.name;
                 })
                     .join(', ')}`,
             },
         });
-        return res.status(200).json({ pizzas: pizzaArray });
+        return res.status(200).json('All Done');
     }
     catch (e) {
         return res.status(500).json({ error: 'nothing send' });
